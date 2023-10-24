@@ -43,7 +43,7 @@ file: d = def*; EOF {{ defs = d }}
 def: t = typ; nom = IDENT; LP; args = separated_list(COMMA, var); RP; LB; bod = suite; RB  {{ name = nom ; args = args ; body = bod; return_type = t }}
 ;
 
-var: t = typ; nom = IDENT { Var(t, nom) }
+var: t = typ; nom = IDENT {{ styp = t; name = nom }}
 ;
 
 typ:
