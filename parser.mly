@@ -1,8 +1,10 @@
 %{
   open Ast
 %}
-
-%token INT VOID
+%token <string> CST
+%token <string> STR
+%token <string> IDENT
+%token INT VOID 
 %token IF ELSE
 %token RETURN BREAK CONTINUE
 %token SIZEOF
@@ -11,7 +13,7 @@
 %token RB LB 
 %token COMMA SEMICOLON
 %token EQ
-%token OR AND DEQ NEQ LE LEQ GE GEQ
+%token OR AND EQQ NEQ LE LEQ GE GEQ
 %token EOF
 %token PLUS MINUS TIMES DIV MOD
 %token NOT ESP STAR
@@ -28,59 +30,66 @@
 %nonassoc uminus NOT ESP STAR
 
 /* Point d'entr�e de la grammaire */
-%start prog
+%start file
 
 /* Type des valeurs retourn�es par l'analyseur syntaxique */
-%type <Ast.program> prog
+%type <Ast.Iprogram> file
 
 %%
 
-prog:
-| p = list(stmt) EOF { p }
+file: d = def*; EOF {{ defs = d }}
 ;
- 
+  
+def: t = typ; nom = IDENT; LP; args = separated_list(COMMA, var); RP; LB; bod = suite; RB  {{ name = nom ; args = args ; body = bod; return_type = t }}
+;
+
+var: t = typ; nom = IDENT {{ typ = t; name = nom }}
+;
+
+typ:
+  | INT   { Int }
+  | VOID  { Void }
+;
+
+suite: s = separated_list(SEMICOLON; stmt) { Sblock(s), $startpos }
+;
+
 stmt:
-| PRINT e = expr             { Print e }
-| READ id = IDENT             { Read id }
-| FUNCTION id = IDENT LP arg = IDENT RP COLON e = expr             { Function(id,arg,e) }
+  | s = simple_stmt {s}
+  | IF; e = expr; LB; s_if = suite; RB; ELSE; LB; s_else = suite; RB { Sif_else(e, s_if, s_else), $startpos }
+  | IF; e = expr; LB; s_if = suite; RB { Sif(e, s_if, s_if),  $startpos }
 ;
- 
-type stmt = stmt_node*Lexing.position
 
-stmt_node:
-  | Sif of expr*stmt*stmt
-  | Sblock of stmt list
-  | Sreturn of expr
-  | Sassign of expr*expr
-  | Sval of expr
-
-left_value:
-  | s =   Var of string
+simple_stmt:
+  | RETURN; e = expr               { Sreturn(e) }
+  | e1 = expr; eq; e2 = expe       { Sassign(e1, e2) }
+  | e = expr                       { Sval(e) }
+;
 
 expr:
-  | Val = left_value
-  | UnOp of expr
-  | BinOp of binop * expr*expr
-  | Ecall of string*expr list
-
-
-expr:
-| c = CST                        { Cst c }
-| fct = IDENT LP arg = expr RP                 { Call(fct,arg) }
-| id = IDENT                     { Var id }
-| e1 = expr o = op e2 = expr     { Binop (o, e1, e2) }
-| MINUS e = expr %prec uminus    { Binop (Sub, Cst 0, e) } 
-| LET id = IDENT EQ e1 = expr IN e2 = expr 
-                                 { Letin (id, e1, e2) }
-| LP e = expr RP                 { e }
+  | i = CST                        { Const(i) }
+  | v = left_value                 { Val(v) }
+  | e1 = expr o = op e2 = expr     { Op(o,e1,e2) }
+  | MINUS e = expr %prec uminus    { Moins(e) } 
+  | NOT e = expr                   { Not(e) }
 ;
+
+left_value: v = IDENT              { Var(s) }
+;
+
 
 %inline op:
-| PLUS  { Add }
-| MINUS { Sub }
-| TIMES { Mul }
-| DIV   { Div }
+  | PLUS  { Add }
+  | MINUS { Sub }
+  | TIMES { Mul }
+  | DIV   { Div }
+  | MOD   { Mod }
+  | LEQ   { Leq }
+  | GEQ   { Geq }
+  | GE    { Ge  }
+  | LE    { Le  }
+  | NEQ   { Neq }
+  | EQQ   { Eq  }
+  | AND   { And }
+  | OR    { Or  } 
 ;
-
-
-
