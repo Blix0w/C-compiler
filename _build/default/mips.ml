@@ -87,7 +87,6 @@ let print_program p out_filename =
   add "\t.data";
   List.iter (fun e -> string_data e |> add ) p.data ;
   add "\t.text";
-  add "\tmain:";
   List.iter (fun e -> string_instruction e |> add ) p.text  ;
   close_out out_file
 

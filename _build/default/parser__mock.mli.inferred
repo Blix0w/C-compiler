@@ -43,9 +43,12 @@ val xv_suite : Ast.stmt
 val xv_stmt : Ast.stmt
 val xv_simple_stmt : Ast.stmt
 val xv_separated_nonempty_list_COMMA_var_ : Ast.left_value list
+val xv_separated_nonempty_list_COMMA_expr_ : Ast.expr list
 val xv_separated_list_COMMA_var_ : Ast.left_value list
+val xv_separated_list_COMMA_expr_ : Ast.expr list
 val xv_op : Ast.binop
 val xv_loption_separated_nonempty_list_COMMA_var__ : Ast.left_value list
+val xv_loption_separated_nonempty_list_COMMA_expr__ : Ast.expr list
 val xv_list_stmt_ : Ast.stmt list
 val xv_list_def_ : Ast.def list
 val xv_left_value : Ast.left_value

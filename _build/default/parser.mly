@@ -43,7 +43,7 @@ file: d = def*; EOF {{ defs = d }}
 def: t = typ; nom = IDENT; LP; args = separated_list(COMMA, var); RP; LB; bod = suite; RB  {{ name = nom ; args = args ; body = bod; return_type = t }}
 ;
 
-var: t = typ; nom = IDENT { Def(t, nom) }
+var: t = typ; l = left_value { Def(t, l) }
 ;
 
 typ:
@@ -69,11 +69,13 @@ simple_stmt:
 ;
 
 expr:
-  | i = const                        { Const(i) }
+  | i = const                       { Const(i) }
   | v = left_value                 { Val(v) }
   | e1 = expr o = op e2 = expr     { BinOp(o,e1,e2) }
   | MINUS e = expr %prec uminus    { Moins(e) } 
-  | NOT e = expr                   { Not(e) }
+  | NOT e = expr                                            { Not(e) }
+  | nom = IDENT; LP; args = separated_list(COMMA, expr); RP  { Ecall(nom, args) }
+  | LP e = expr RP                 { e }
 ;
 
 left_value: v = IDENT              { Var(v) }

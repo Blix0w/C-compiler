@@ -11,7 +11,7 @@ and stmt_node =
   | Scontinue
 and left_value =
   | Var of string
-  | Def of typ*string
+  | Def of typ*left_value
 and typ =
   | Int
   | Void
@@ -41,20 +41,19 @@ and binop =
   | Or
 type def = { name : string ; args : left_value list ; body : stmt ;  return_type : typ}
 and prog = { defs : def list ; } 
-(*
+
 type iprogram = (string*iAST) list * (string*int) list
 and iAST =
-  | Iif of expr*iAST*iAST | Iblock of iAST list
-  | Ireturn of expr | Iassign of left_value*expr
-  | Ival of expr
-and value =
-  | Ileft of left_value | Iconst of int
-and left_value = pos * int (* position in memory and size *)
+  | Iif of iexpr*iAST*iAST | Iblock of iAST list
+  | Ireturn of iexpr | Iassign of ileft_value*iexpr
+  | Ival of iexpr
+and ivalue =
+  | Ileft of ileft_value | Iconst of int
+and ileft_value = pos * int (* position in memory and size *)
 and pos =
   | Ilocal of int (* offset to FP *)
   | Iglobal of string (* label *)
-  | Ideref of expr (* for pointers *)
-and expr =
-  | Iunop of value | Ibinop of binop * value * value
+  | Ideref of iexpr (* for pointers *)
+and iexpr =
+  | Iunop of ivalue | Ibinop of binop * ivalue * ivalue
   | Icall of pos * string * int (* label + offset *)
-*)

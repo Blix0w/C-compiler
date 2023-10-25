@@ -7,7 +7,7 @@
    
   exception Lexing_error of char
     
-  let kwd_tbl = ["int", INT; "void", VOID; "print_int",PRINT_INT; "print_string", PRINT_STRING; "if", IF; "else", ELSE; "return", RETURN; "break", BREAK; "continue", CONTINUE; "sizeof", SIZEOF]
+  let kwd_tbl = ["int", INT; "void", VOID; "if", IF; "else", ELSE; "return", RETURN; "break", BREAK; "continue", CONTINUE; "sizeof", SIZEOF]
   let id_or_kwd s = try List.assoc s kwd_tbl with _ -> IDENT s
 
   let newline lexbuf =
@@ -19,7 +19,7 @@
 
 let letter = ['a'-'z' 'A'-'Z']
 let digit = ['0'-'9']
-let ident = letter (letter | digit)*
+let ident = letter (letter | digit | '_')*
 let integer = ['0'-'9']+
 let space = [' ' '\t']
 
