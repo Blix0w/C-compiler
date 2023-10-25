@@ -5,7 +5,7 @@
    
   exception Lexing_error of char
     
-  let kwd_tbl = ["int", INT; "void", VOID; "print_int",PRINT_INT; "print_string", PRINT_STRING; "read",READ; "if", IF; "else", ELSE; "return", RETURN; "break", BREAK; "continue", CONTINUE; "sizeof", SIZEOF]
+  let kwd_tbl = ["int", INT; "void", VOID; "print_int",PRINT_INT; "print_string", PRINT_STRING; "if", IF; "else", ELSE; "return", RETURN; "break", BREAK; "continue", CONTINUE; "sizeof", SIZEOF]
   let id_or_kwd s = try List.assoc s kwd_tbl with _ -> IDENT s
 
   let newline lexbuf =
@@ -161,7 +161,7 @@ let
 
   | 3 ->
 # 30 "lexer.mll"
-            ( DEQ )
+            ( EQQ )
 # 166 "lexer.ml"
 
   | 4 ->
@@ -281,7 +281,7 @@ let
 # 282 "lexer.ml"
 = Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
 # 53 "lexer.mll"
-                 ( INT (int_of_string s) )
+                 ( CST s )
 # 286 "lexer.ml"
 
   | 27 ->

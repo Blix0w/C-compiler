@@ -6,7 +6,7 @@ open Format
 open Lexing
 
 (* Option de compilation, pour s'arreter a l'issue du parser *)
-let parse_only = ref true
+let parse_only = ref false
 
 (* Noms des fichiers source et cible *)
 let ifile = ref ""
@@ -59,7 +59,7 @@ let () =
        n'est detectee.
        La fonction Lexer.token est utilisee par Parser.prog pour obtenir 
        le prochain token. *)
-    let p = Parser.prog Lexer.token buf in
+    let p = Parser.file Lexer.token buf in
     close_in f;
     
     (* On s'arrete ici si on ne veut faire que le parsing *)

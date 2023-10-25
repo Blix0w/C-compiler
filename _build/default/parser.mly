@@ -51,11 +51,11 @@ typ:
   | VOID  { Void }
 ;
 
-suite: s = separated_list(SEMICOLON, stmt) { Sblock(s), $startpos }
+suite: s = stmt* { Sblock(s), $startpos }
 ;
 
 stmt:
-  | s = simple_stmt {s}
+  | s = simple_stmt; SEMICOLON {s}
   | IF; e = expr; LB; s_if = suite; RB; ELSE; LB; s_else = suite; RB { Sif_else(e, s_if, s_else), $startpos }
   | IF; e = expr; LB; s_if = suite; RB { Sif(e, s_if),  $startpos }
 ;
@@ -80,8 +80,8 @@ left_value: v = IDENT              { Var(v) }
 ;
 
 const:
-| i = CST { Int(i) }
-| s = STR { Str(s) }
+  | i = CST { Int(i) }
+  | s = STR { Str(s) }
 ;
 
 %inline op:

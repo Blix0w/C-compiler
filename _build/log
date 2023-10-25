@@ -1,10 +1,10 @@
 # dune build
 # OCAMLPARAM: unset
 # Workspace root: /cal/exterieurs/kprovin-23/Desktop/Projet4INF108/C-compiler
-$ /usr/bin/nproc > /tmp/dunedae1b8.output 2> /dev/null
+$ /usr/bin/nproc > /tmp/dunee6a3cf.output 2> /dev/null
 # Auto-detected concurrency: 12
 # disable binary cache
-$ /usr/bin/ocamlc.opt -config > /tmp/dunedd2737.output
+$ /usr/bin/ocamlc.opt -config > /tmp/dune6b348a.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -152,21 +152,7 @@ $ /usr/bin/ocamlc.opt -config > /tmp/dunedd2737.output
 #      ; windows_unicode = false
 #      }
 #  }
-$ (cd _build/default && /usr/bin/menhir parser.mly --base parser --infer-write-query parser__mock.ml.mock)
-> File "parser.mly", line 19, characters 11-14:
-> Warning: the token ESP is unused.
-> File "parser.mly", line 11, characters 7-16:
-> Warning: the token PRINT_INT is unused.
-> File "parser.mly", line 11, characters 17-29:
-> Warning: the token PRINT_STRING is unused.
-> File "parser.mly", line 10, characters 7-13:
-> Warning: the token SIZEOF is unused.
-> File "parser.mly", line 19, characters 15-19:
-> Warning: the token STAR is unused.
-$ (cd _build/default && /usr/bin/ocamldep.opt -modules -impl parser__mock.ml.mock) > _build/default/.calc.eobjs/parser__mock.ml.mock.d
-$ (cd _build/default && /usr/bin/ocamlc.opt -g -I .calc.eobjs/byte -open Dune__exe -short-paths -i -impl parser__mock.ml.mock) > _build/default/parser__mock.mli.inferred
-> File "parser.mly", line 43, characters 114-118:
-> Error: This expression has type left_value list
->        but an expression was expected of type string list
->        Type left_value is not compatible with type string 
-[2]
+$ (cd _build/default && /usr/bin/ocamldep.opt -modules -impl calc.ml) > _build/default/.calc.eobjs/calc.ml.d
+$ (cd _build/default && /usr/bin/ocamlc.opt -g -bin-annot -I .calc.eobjs/byte -no-alias-deps -opaque -open Dune__exe -o .calc.eobjs/byte/dune__exe__Calc.cmo -c -impl calc.ml)
+$ (cd _build/default && /usr/bin/ocamlopt.opt -g -I .calc.eobjs/byte -I .calc.eobjs/native -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .calc.eobjs/native/dune__exe__Calc.cmx -c -impl calc.ml)
+$ (cd _build/default && /usr/bin/ocamlopt.opt -g -o calc.exe .calc.eobjs/native/dune__exe.cmx .calc.eobjs/native/dune__exe__Ast.cmx .calc.eobjs/native/dune__exe__Mips.cmx .calc.eobjs/native/dune__exe__Compile.cmx .calc.eobjs/native/dune__exe__Parser.cmx .calc.eobjs/native/dune__exe__Lexer.cmx .calc.eobjs/native/dune__exe__Calc.cmx)

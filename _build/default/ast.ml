@@ -39,7 +39,7 @@ and binop =
   | Eqq
   | And
   | Or
-type def = { name : string ; args : string list ; body : stmt ;  return_type : typ}
+type def = { name : string ; args : left_value list ; body : stmt ;  return_type : typ}
 and prog = { defs : def list ; } 
 (*
 type iprogram = (string*iAST) list * (string*int) list

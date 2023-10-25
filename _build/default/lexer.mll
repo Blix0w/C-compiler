@@ -7,7 +7,7 @@
    
   exception Lexing_error of char
     
-  let kwd_tbl = ["int", INT; "void", VOID; "print_int",PRINT_INT; "print_string", PRINT_STRING; "read",READ; "if", IF; "else", ELSE; "return", RETURN; "break", BREAK; "continue", CONTINUE; "sizeof", SIZEOF]
+  let kwd_tbl = ["int", INT; "void", VOID; "print_int",PRINT_INT; "print_string", PRINT_STRING; "if", IF; "else", ELSE; "return", RETURN; "break", BREAK; "continue", CONTINUE; "sizeof", SIZEOF]
   let id_or_kwd s = try List.assoc s kwd_tbl with _ -> IDENT s
 
   let newline lexbuf =
@@ -27,7 +27,7 @@ rule token = parse
   | '\n'    { newline lexbuf; token lexbuf }
   | space+  { token lexbuf }
   | ident as id { id_or_kwd id }
-  | "=="    { DEQ }
+  | "=="    { EQQ }
   | "!="    { NEQ }
   | "<="    { LEQ }
   | ">="    { GEQ }
@@ -50,7 +50,7 @@ rule token = parse
   | '!'     { NOT }
   | '&'     { ESP }
   | '*'     { STAR }
-  | integer as s { INT (int_of_string s) }
+  | integer as s { CST s }
   | eof     { EOF }
   | _ as c  { raise (Lexing_error c) }
  
