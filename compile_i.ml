@@ -14,6 +14,11 @@ let end_code = [Label("end"); Li(V0 ,10); Syscall]
 let ofset o = 
   Areg(o * -4, SP)
 
+let compile_pos lst_var p o = match p with
+  | Ilocal(i) -> []
+  | Iglobal(s) -> []
+  | Ideref(e) -> []
+  
 let compile_ivalue lst_var v o = match v with
   | Ileft(lv) -> []
   | Iconst(i) ->  [
