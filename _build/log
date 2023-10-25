@@ -1,10 +1,10 @@
 # dune build
 # OCAMLPARAM: unset
 # Workspace root: /cal/exterieurs/kprovin-23/Desktop/Projet4INF108/C-compiler
-$ /usr/bin/nproc > /tmp/dunec88b4d.output 2> /dev/null
+$ /usr/bin/nproc > /tmp/dunedae1b8.output 2> /dev/null
 # Auto-detected concurrency: 12
 # disable binary cache
-$ /usr/bin/ocamlc.opt -config > /tmp/dune194ba7.output
+$ /usr/bin/ocamlc.opt -config > /tmp/dunedd2737.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -153,8 +153,6 @@ $ /usr/bin/ocamlc.opt -config > /tmp/dune194ba7.output
 #      }
 #  }
 $ (cd _build/default && /usr/bin/menhir parser.mly --base parser --infer-write-query parser__mock.ml.mock)
-> File "parser.mly", line 26, characters 10-13:
-> Warning: the token DEQ is unused.
 > File "parser.mly", line 19, characters 11-14:
 > Warning: the token ESP is unused.
 > File "parser.mly", line 11, characters 7-16:
@@ -165,10 +163,10 @@ $ (cd _build/default && /usr/bin/menhir parser.mly --base parser --infer-write-q
 > Warning: the token SIZEOF is unused.
 > File "parser.mly", line 19, characters 15-19:
 > Warning: the token STAR is unused.
-> File "parser.mly", line 5, characters 16-19:
-> Warning: the token STR is unused.
 $ (cd _build/default && /usr/bin/ocamldep.opt -modules -impl parser__mock.ml.mock) > _build/default/.calc.eobjs/parser__mock.ml.mock.d
 $ (cd _build/default && /usr/bin/ocamlc.opt -g -I .calc.eobjs/byte -open Dune__exe -short-paths -i -impl parser__mock.ml.mock) > _build/default/parser__mock.mli.inferred
-> File "parser.mly", line 46, characters 29-33:
-> Error: Unbound record field styp
+> File "parser.mly", line 43, characters 114-118:
+> Error: This expression has type left_value list
+>        but an expression was expected of type string list
+>        Type left_value is not compatible with type string 
 [2]

@@ -1,7 +1,8 @@
 type stmt = stmt_node*Lexing.position
 
 and stmt_node =
-  | Sif of expr*stmt*stmt
+  | Sif of expr*stmt
+  | Sif_else of expr*stmt*stmt
   | Sblock of stmt list
   | Sreturn of expr
   | Sassign of expr*expr
@@ -10,12 +11,20 @@ and stmt_node =
   | Scontinue
 and left_value =
   | Var of string
+  | Def of typ*string
+and typ =
+  | Int
+  | Void
 and expr =
-  | Const of int
+  | Const of const
   | Val of left_value
-  | UnOp of expr
+  | Moins of expr
   | BinOp of binop * expr*expr
   | Ecall of string*expr list
+  | Not of expr
+and const = 
+  | Int of string
+  | Str of string
 and binop = 
   | Add
   | Sub
@@ -30,6 +39,8 @@ and binop =
   | Eqq
   | And
   | Or
+type def = { name : string ; args : string list ; body : stmt ;  return_type : typ}
+and prog = { defs : def list ; } 
 (*
 type iprogram = (string*iAST) list * (string*int) list
 and iAST =

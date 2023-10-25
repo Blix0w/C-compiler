@@ -23,7 +23,7 @@
 %right EQ
 %left OR
 %left AND
-%nonassoc DEQ NEQ
+%nonassoc EQQ NEQ
 %nonassoc LE LEQ GE GEQ
 %left PLUS MINUS 
 %left TIMES DIV MOD
@@ -33,7 +33,7 @@
 %start file
 
 /* Type des valeurs retourn�es par l'analyseur syntaxique */
-%type <Ast.iprogram> file
+%type <Ast.prog> file
 
 %%
 
@@ -43,7 +43,7 @@ file: d = def*; EOF {{ defs = d }}
 def: t = typ; nom = IDENT; LP; args = separated_list(COMMA, var); RP; LB; bod = suite; RB  {{ name = nom ; args = args ; body = bod; return_type = t }}
 ;
 
-var: t = typ; nom = IDENT {{ styp = t; name = nom }}
+var: t = typ; nom = IDENT { Def(t, nom) }
 ;
 
 typ:
@@ -57,28 +57,32 @@ suite: s = separated_list(SEMICOLON, stmt) { Sblock(s), $startpos }
 stmt:
   | s = simple_stmt {s}
   | IF; e = expr; LB; s_if = suite; RB; ELSE; LB; s_else = suite; RB { Sif_else(e, s_if, s_else), $startpos }
-  | IF; e = expr; LB; s_if = suite; RB { Sif(e, s_if, s_if),  $startpos }
+  | IF; e = expr; LB; s_if = suite; RB { Sif(e, s_if),  $startpos }
 ;
 
 simple_stmt:
-  | CONTINUE { Sbreak }
-  | BREAK { Scontinue }
-  | RETURN; e = expr               { Sreturn(e) }
-  | e1 = expr; EQ; e2 = expr       { Sassign(e1, e2) }
-  | e = expr                       { Sval(e) }
+  | CONTINUE                        { Sbreak, $startpos }
+  | BREAK                           { Scontinue, $startpos }
+  | RETURN; e = expr                { Sreturn(e), $startpos }
+  | e1 = expr; EQ; e2 = expr        { Sassign(e1, e2), $startpos }
+  | e = expr                        { Sval(e), $startpos }
 ;
 
 expr:
-  | i = CST                        { Const(i) }
+  | i = const                        { Const(i) }
   | v = left_value                 { Val(v) }
-  | e1 = expr o = op e2 = expr     { Op(o,e1,e2) }
+  | e1 = expr o = op e2 = expr     { BinOp(o,e1,e2) }
   | MINUS e = expr %prec uminus    { Moins(e) } 
   | NOT e = expr                   { Not(e) }
 ;
 
-left_value: v = IDENT              { Var(s) }
+left_value: v = IDENT              { Var(v) }
 ;
 
+const:
+| i = CST { Int(i) }
+| s = STR { Str(s) }
+;
 
 %inline op:
   | PLUS  { Add }
@@ -91,7 +95,7 @@ left_value: v = IDENT              { Var(s) }
   | GE    { Ge  }
   | LE    { Le  }
   | NEQ   { Neq }
-  | EQQ   { Eq  }
+  | EQQ   { Eqq  }
   | AND   { And }
   | OR    { Or  } 
   ;
