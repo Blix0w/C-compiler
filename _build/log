@@ -1,10 +1,11 @@
 # dune build
 # OCAMLPARAM: unset
-# Workspace root: /cal/exterieurs/kprovin-23/Desktop/Projet4INF108/C-compiler
-$ /usr/bin/nproc > /tmp/dune501f51.output 2> /dev/null
-# Auto-detected concurrency: 12
+# Workspace root:
+# "/Users/killianprovin/Desktop/Te\204\129le\204\129com_Paris/INF108/INF108_groupe"
+$ /opt/homebrew/bin/nproc > /var/folders/hv/r_1fqttj1s3c_x32c782x9000000gn/T/dune78e947.output 2> /dev/null
+# Auto-detected concurrency: 8
 # disable binary cache
-$ /usr/bin/ocamlc.opt -config > /tmp/dune10802b.output
+$ /Users/killianprovin/.opam/default/bin/ocamlc.opt -config > /var/folders/hv/r_1fqttj1s3c_x32c782x9000000gn/T/dune20ba5e.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -13,114 +14,77 @@ $ /usr/bin/ocamlc.opt -config > /tmp/dune10802b.output
 #  ; for_host = None
 #  ; fdo_target_exe = None
 #  ; build_dir = "default"
-#  ; toplevel_path = None
-#  ; ocaml_bin = External "/usr/bin"
-#  ; ocaml = Ok External "/usr/bin/ocaml"
-#  ; ocamlc = External "/usr/bin/ocamlc.opt"
-#  ; ocamlopt = Ok External "/usr/bin/ocamlopt.opt"
-#  ; ocamldep = Ok External "/usr/bin/ocamldep.opt"
-#  ; ocamlmklib = Ok External "/usr/bin/ocamlmklib.opt"
+#  ; toplevel_path =
+#      Some External "/Users/killianprovin/.opam/default/lib/toplevel"
+#  ; ocaml_bin = External "/Users/killianprovin/.opam/default/bin"
+#  ; ocaml = Ok External "/Users/killianprovin/.opam/default/bin/ocaml"
+#  ; ocamlc = External "/Users/killianprovin/.opam/default/bin/ocamlc.opt"
+#  ; ocamlopt =
+#      Ok External "/Users/killianprovin/.opam/default/bin/ocamlopt.opt"
+#  ; ocamldep =
+#      Ok External "/Users/killianprovin/.opam/default/bin/ocamldep.opt"
+#  ; ocamlmklib =
+#      Ok External "/Users/killianprovin/.opam/default/bin/ocamlmklib.opt"
 #  ; env =
 #      map
-#        { "CAML_LD_LIBRARY_PATH" :
-#            "/cal/exterieurs/kprovin-23/Desktop/Projet4INF108/C-compiler/_build/install/default/lib/stublibs"
-#        ; "DUNE_OCAML_HARDCODED" : "/usr/lib/ocaml"
-#        ; "DUNE_OCAML_STDLIB" : "/usr/lib/ocaml"
+#        { "DUNE_OCAML_HARDCODED" : "/Users/killianprovin/.opam/default/lib"
+#        ; "DUNE_OCAML_STDLIB" : "/Users/killianprovin/.opam/default/lib/ocaml"
 #        ; "DUNE_SOURCEROOT" :
-#            "/cal/exterieurs/kprovin-23/Desktop/Projet4INF108/C-compiler"
+#            "/Users/killianprovin/Desktop/Te\204\129le\204\129com_Paris/INF108/INF108_groupe"
 #        ; "INSIDE_DUNE" :
-#            "/cal/exterieurs/kprovin-23/Desktop/Projet4INF108/C-compiler/_build/default"
-#        ; "MANPATH" :
-#            "/cal/exterieurs/kprovin-23/Desktop/Projet4INF108/C-compiler/_build/install/default/bin"
+#            "/Users/killianprovin/Desktop/Te\204\129le\204\129com_Paris/INF108/INF108_groupe/_build/default"
 #        ; "OCAMLFIND_IGNORE_DUPS_IN" :
-#            "/cal/exterieurs/kprovin-23/Desktop/Projet4INF108/C-compiler/_build/install/default/lib"
+#            "/Users/killianprovin/Desktop/Te\204\129le\204\129com_Paris/INF108/INF108_groupe/_build/install/default/lib"
 #        ; "OCAMLPATH" :
-#            "/cal/exterieurs/kprovin-23/Desktop/Projet4INF108/C-compiler/_build/install/default/lib"
+#            "/Users/killianprovin/Desktop/Te\204\129le\204\129com_Paris/INF108/INF108_groupe/_build/install/default/lib"
 #        ; "OCAMLTOP_INCLUDE_PATH" :
-#            "/cal/exterieurs/kprovin-23/Desktop/Projet4INF108/C-compiler/_build/install/default/lib/toplevel"
+#            "/Users/killianprovin/Desktop/Te\204\129le\204\129com_Paris/INF108/INF108_groupe/_build/install/default/lib/toplevel"
 #        ; "OCAML_COLOR" : "always"
 #        ; "OPAMCOLOR" : "always"
 #        }
-#  ; findlib_path = [ External "/usr/lib/ocaml" ]
+#  ; findlib_path = [ External "/Users/killianprovin/.opam/default/lib" ]
 #  ; arch_sixtyfour = true
 #  ; natdynlink_supported = true
 #  ; supports_shared_libraries = true
 #  ; ocaml_config =
 #      { version = "4.13.1"
-#      ; standard_library_default = "/usr/lib/ocaml"
-#      ; standard_library = "/usr/lib/ocaml"
+#      ; standard_library_default =
+#          "/Users/killianprovin/.opam/default/lib/ocaml"
+#      ; standard_library = "/Users/killianprovin/.opam/default/lib/ocaml"
 #      ; standard_runtime = "the_standard_runtime_variable_was_deleted"
 #      ; ccomp_type = "cc"
-#      ; c_compiler = "x86_64-linux-gnu-gcc"
+#      ; c_compiler = "cc"
 #      ; ocamlc_cflags =
-#          [ "-O2"
-#          ; "-fno-strict-aliasing"
-#          ; "-fwrapv"
-#          ; "-pthread"
-#          ; "-fPIC"
-#          ; "-g"
-#          ; "-O2"
-#          ; "-fstack-protector-strong"
-#          ; "-Wformat"
-#          ; "-Werror=format-security"
-#          ]
-#      ; ocamlc_cppflags =
-#          [ "-D_FILE_OFFSET_BITS=64"; "-Wdate-time"; "-D_FORTIFY_SOURCE=2" ]
+#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread" ]
+#      ; ocamlc_cppflags = [ "-D_FILE_OFFSET_BITS=64" ]
 #      ; ocamlopt_cflags =
-#          [ "-O2"
-#          ; "-fno-strict-aliasing"
-#          ; "-fwrapv"
-#          ; "-pthread"
-#          ; "-fPIC"
-#          ; "-g"
-#          ; "-O2"
-#          ; "-fstack-protector-strong"
-#          ; "-Wformat"
-#          ; "-Werror=format-security"
-#          ]
-#      ; ocamlopt_cppflags =
-#          [ "-D_FILE_OFFSET_BITS=64"; "-Wdate-time"; "-D_FORTIFY_SOURCE=2" ]
+#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread" ]
+#      ; ocamlopt_cppflags = [ "-D_FILE_OFFSET_BITS=64" ]
 #      ; bytecomp_c_compiler =
-#          [ "x86_64-linux-gnu-gcc"
+#          [ "cc"
 #          ; "-O2"
 #          ; "-fno-strict-aliasing"
 #          ; "-fwrapv"
 #          ; "-pthread"
-#          ; "-fPIC"
-#          ; "-g"
-#          ; "-O2"
-#          ; "-fstack-protector-strong"
-#          ; "-Wformat"
-#          ; "-Werror=format-security"
 #          ; "-D_FILE_OFFSET_BITS=64"
-#          ; "-Wdate-time"
-#          ; "-D_FORTIFY_SOURCE=2"
 #          ]
 #      ; bytecomp_c_libraries = [ "-lm"; "-lpthread" ]
 #      ; native_c_compiler =
-#          [ "x86_64-linux-gnu-gcc"
+#          [ "cc"
 #          ; "-O2"
 #          ; "-fno-strict-aliasing"
 #          ; "-fwrapv"
 #          ; "-pthread"
-#          ; "-fPIC"
-#          ; "-g"
-#          ; "-O2"
-#          ; "-fstack-protector-strong"
-#          ; "-Wformat"
-#          ; "-Werror=format-security"
 #          ; "-D_FILE_OFFSET_BITS=64"
-#          ; "-Wdate-time"
-#          ; "-D_FORTIFY_SOURCE=2"
 #          ]
 #      ; native_c_libraries = [ "-lm" ]
 #      ; cc_profile = []
-#      ; architecture = "amd64"
+#      ; architecture = "arm64"
 #      ; model = "default"
 #      ; int_size = 63
 #      ; word_size = 64
-#      ; system = "linux"
-#      ; asm = [ "x86_64-linux-gnu-as" ]
+#      ; system = "macosx"
+#      ; asm = [ "cc"; "-c"; "-Wno-trigraphs" ]
 #      ; asm_cfi_supported = true
 #      ; with_frame_pointers = false
 #      ; ext_exe = ""
@@ -131,8 +95,8 @@ $ /usr/bin/ocamlc.opt -config > /tmp/dune10802b.output
 #      ; os_type = "Unix"
 #      ; default_executable_name = "a.out"
 #      ; systhread_supported = true
-#      ; host = "x86_64-pc-linux-gnu"
-#      ; target = "x86_64-pc-linux-gnu"
+#      ; host = "aarch64-apple-darwin21.1.0"
+#      ; target = "aarch64-apple-darwin21.1.0"
 #      ; profiling = false
 #      ; flambda = false
 #      ; spacetime = false
@@ -152,16 +116,33 @@ $ /usr/bin/ocamlc.opt -config > /tmp/dune10802b.output
 #      ; windows_unicode = false
 #      }
 #  }
-$ (cd _build/default && /usr/bin/ocamldep.opt -modules -impl ast.ml) > _build/default/.calc.eobjs/ast.ml.d
-$ (cd _build/default && /usr/bin/ocamlc.opt -g -bin-annot -I .calc.eobjs/byte -no-alias-deps -opaque -open Dune__exe -o .calc.eobjs/byte/dune__exe__Ast.cmo -c -impl ast.ml)
-$ (cd _build/default && /usr/bin/ocamlc.opt -g -I .calc.eobjs/byte -open Dune__exe -short-paths -i -impl parser__mock.ml.mock) > _build/default/parser__mock.mli.inferred
-$ (cd _build/default && /usr/bin/ocamlopt.opt -g -I .calc.eobjs/byte -I .calc.eobjs/native -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .calc.eobjs/native/dune__exe__Ast.cmx -c -impl ast.ml)
-$ (cd _build/default && /usr/bin/ocamlc.opt -g -bin-annot -I .calc.eobjs/byte -no-alias-deps -opaque -open Dune__exe -o .calc.eobjs/byte/dune__exe__Parser.cmi -c -intf parser.mli)
-$ (cd _build/default && /usr/bin/ocamlc.opt -g -bin-annot -I .calc.eobjs/byte -no-alias-deps -opaque -open Dune__exe -o .calc.eobjs/byte/dune__exe__Compile.cmo -c -impl compile.ml)
-$ (cd _build/default && /usr/bin/ocamlc.opt -g -bin-annot -I .calc.eobjs/byte -no-alias-deps -opaque -open Dune__exe -o .calc.eobjs/byte/dune__exe__Lexer.cmo -c -impl lexer.ml)
-$ (cd _build/default && /usr/bin/ocamlopt.opt -g -I .calc.eobjs/byte -I .calc.eobjs/native -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .calc.eobjs/native/dune__exe__Compile.cmx -c -impl compile.ml)
-$ (cd _build/default && /usr/bin/ocamlopt.opt -g -I .calc.eobjs/byte -I .calc.eobjs/native -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .calc.eobjs/native/dune__exe__Lexer.cmx -c -impl lexer.ml)
-$ (cd _build/default && /usr/bin/ocamlc.opt -g -bin-annot -I .calc.eobjs/byte -no-alias-deps -opaque -open Dune__exe -o .calc.eobjs/byte/dune__exe__Calc.cmo -c -impl calc.ml)
-$ (cd _build/default && /usr/bin/ocamlopt.opt -g -I .calc.eobjs/byte -I .calc.eobjs/native -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .calc.eobjs/native/dune__exe__Calc.cmx -c -impl calc.ml)
-$ (cd _build/default && /usr/bin/ocamlopt.opt -g -I .calc.eobjs/byte -I .calc.eobjs/native -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .calc.eobjs/native/dune__exe__Parser.cmx -c -impl parser.ml)
-$ (cd _build/default && /usr/bin/ocamlopt.opt -g -o calc.exe .calc.eobjs/native/dune__exe.cmx .calc.eobjs/native/dune__exe__Ast.cmx .calc.eobjs/native/dune__exe__Mips.cmx .calc.eobjs/native/dune__exe__Compile.cmx .calc.eobjs/native/dune__exe__Parser.cmx .calc.eobjs/native/dune__exe__Lexer.cmx .calc.eobjs/native/dune__exe__Calc.cmx)
+$ (cd _build/default && /Users/killianprovin/.opam/default/bin/ocamldep.opt -modules -impl calc.ml) > _build/default/.calc.eobjs/calc.ml.d
+$ (cd _build/default && /Users/killianprovin/.opam/default/bin/ocamldep.opt -modules -impl compile.ml) > _build/default/.calc.eobjs/compile.ml.d
+> File "compile.ml", line 28, characters 13-14:
+> 28 |     |Def(type, lvalue2) -> failwith "not implemented2"
+>                   ^
+> Error: Syntax error
+[2]
+$ (cd _build/default && /Users/killianprovin/.opam/default/bin/ocamldep.opt -modules -impl ast.ml) > _build/default/.calc.eobjs/ast.ml.d
+$ (cd _build/default && /Users/killianprovin/.opam/default/bin/ocamllex -q -o lexer.ml lexer.mll)
+$ (cd _build/default && /Users/killianprovin/.opam/default/bin/ocamldep.opt -modules -impl mips.ml) > _build/default/.calc.eobjs/mips.ml.d
+$ (cd _build/default && /Users/killianprovin/.opam/default/bin/menhir parser.mly --base parser --infer-write-query parser__mock.ml.mock)
+> File "parser.mly", line 19, characters 11-14:
+> Warning: the token ESP is unused.
+> File "parser.mly", line 11, characters 7-16:
+> Warning: the token PRINT_INT is unused.
+> File "parser.mly", line 11, characters 17-29:
+> Warning: the token PRINT_STRING is unused.
+> File "parser.mly", line 10, characters 7-13:
+> Warning: the token SIZEOF is unused.
+> File "parser.mly", line 19, characters 15-19:
+> Warning: the token STAR is unused.
+$ (cd _build/default && /Users/killianprovin/.opam/default/bin/ocamldep.opt -modules -impl lexer.ml) > _build/default/.calc.eobjs/lexer.ml.d
+$ (cd _build/default && /Users/killianprovin/.opam/default/bin/ocamldep.opt -modules -impl parser__mock.ml.mock) > _build/default/.calc.eobjs/parser__mock.ml.mock.d
+$ (cd _build/default && /Users/killianprovin/.opam/default/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -49 -nopervasives -nostdlib -g -bin-annot -I .calc.eobjs/byte -no-alias-deps -opaque -o .calc.eobjs/byte/dune__exe.cmo -c -impl .calc.eobjs/dune__exe.ml-gen)
+$ (cd _build/default && /Users/killianprovin/.opam/default/bin/ocamlc.opt -g -bin-annot -I .calc.eobjs/byte -no-alias-deps -opaque -open Dune__exe -o .calc.eobjs/byte/dune__exe__Ast.cmo -c -impl ast.ml)
+$ (cd _build/default && /Users/killianprovin/.opam/default/bin/ocamlc.opt -g -I .calc.eobjs/byte -open Dune__exe -short-paths -i -impl parser__mock.ml.mock) > _build/default/parser__mock.mli.inferred
+> File "parser.mly", line 67, characters 46-48:
+> Error: This expression has type expr but an expression was expected of type
+>          left_value
+[2]

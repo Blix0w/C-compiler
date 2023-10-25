@@ -5,7 +5,7 @@ and stmt_node =
   | Sif_else of expr*stmt*stmt
   | Sblock of stmt list
   | Sreturn of expr
-  | Sassign of expr*expr
+  | Sassign of left_value*expr
   | Sval of expr
   | Sbreak 
   | Scontinue
@@ -44,16 +44,22 @@ and prog = { defs : def list ; }
 
 type iprogram = (string*iAST) list * (string*int) list
 and iAST =
-  | Iif of iexpr*iAST*iAST | Iblock of iAST list
-  | Ireturn of iexpr | Iassign of ileft_value*iexpr
+  | Iif of iexpr*iAST*iAST
+  | Iblock of iAST list
+  | Ireturn of iexpr 
+  | Iassign of ileft_value*iexpr
   | Ival of iexpr
+  | Ibreak
+  | Icontinue
 and ivalue =
-  | Ileft of ileft_value | Iconst of int
+  | Ileft of ileft_value 
+  | Iconst of int
 and ileft_value = pos * int (* position in memory and size *)
 and pos =
   | Ilocal of int (* offset to FP *)
   | Iglobal of string (* label *)
   | Ideref of iexpr (* for pointers *)
 and iexpr =
-  | Iunop of ivalue | Ibinop of binop * ivalue * ivalue
+  | Iunop of ivalue 
+  | Ibinop of binop * ivalue * ivalue
   | Icall of pos * string * int (* label + offset *)

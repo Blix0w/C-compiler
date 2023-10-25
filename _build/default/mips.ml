@@ -1,6 +1,6 @@
 
 type register = 
-  | A0 | A1 | V0  | RA | SP | GP | FP | T of int | S of int
+  | A0 | A1 | V0 | RA | SP | GP | FP | T of int | S of int | ZERO
 
 type address =
   | Alab of string
@@ -15,6 +15,7 @@ type instruction =
   | Sw of register * address
   | Arith of arith * register * register * register
   | Arithi of arith * register * register * int
+  | Beq of register * register * address
   | Jal of string
   | J of string
   | Jr of register
@@ -42,6 +43,7 @@ let string_register = function
   | GP -> "$gp"
   | T i -> "$t"^(string_of_int i )
   | S i -> "$t"^(string_of_int i )
+  | ZERO -> "$zero"
          
 let string_arith = function
   | Add -> "add"

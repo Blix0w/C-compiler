@@ -7,6 +7,10 @@ exception VarUndef of string
 exception Error of string ;;
 exception RuntimeError of string * Lexing.position ;;
 
+let variables = Hashtbl.create 1 (* associe un nom à une adresse *)
+let mem = ref 0 (* adresse de la mémoire qu'on va donner et modifier à chaque fois *)
+let allocate_memory size = 
+  mem := !mem + size; !mem
 
 let new_line = [Li(A0 ,10); Li(V0 ,11); Syscall]
 let end_code = [Label("end"); Li(V0 ,10); Syscall]
@@ -17,24 +21,32 @@ let binop_to_arithop (bo: binop): arith = match bo with
 let ofset o = 
   Areg(o * -4, SP)
 
+  (* donne l'addresse et la taille d'une left-value dans la mémoire 
+     ou l'ajoute si elle n'y est pas déjà *)
+  let get_addr_from_lvalue lvalue = match lvalue with
+    |Var(s) -> try Hashtbl.find variables with |_ -> let addr, size = allocate_memory String.length s, String.length s in Hashtbl.add variables s (addr, size); (addr,size)
+    |Def(type, lvalue2) -> failwith "not implemented2"
+
 let rec compile_expr (e: expr) (o: int): instruction list= 
   match e with
-    | Const(c) -> (match c with
-                  | Int(i) -> [
-                                Li(T 0, int_of_string i);
-                                Sw(T 0, ofset o)
-                              ]
-                  | _ -> raise (Error("Cas non traité 4")))
-    | BinOp(bo, e1, e2) ->
-      (compile_expr e1 (o+1)) @ 
-      (compile_expr e2 (o+2)) @ 
-      [
-        Lw(T 0,ofset (o+1)); 
-        Lw(T 1, ofset (o+2)); 
-        Arith(binop_to_arithop bo, T 0, T 0, T 1);
-        Sw(T 0, ofset o)
-      ]
-    | _ -> raise (Error("Cas non traité 3"))
+    | Const(Int c) -> Iunop(Iconst(int_of_string c))
+    | Val(Var s) -> Iunop(Ileft(try (Hashtbl.find variables s, 8 * String.length s)))
+    | Moins(exp) ->  Iunop(Ileft(compile_expr exp 0))
+    (* Ibinop : profondeur de 1 maximum, il faut tout stocker dans des var intermédiaires *)
+    | BinOp(binop, exp1, exp2) -> 
+    | Ecall(nom, exprs) -> let body = compile_iast exprs
+    | Not(exp) -> Iunop(Ileft(compile_expr exp o))
+  
+    (* produit un iAST à partir d'un stmt_node*)
+  and compile_stmt stmt o = match stmt with
+    | Sif(exp, stmt) -> Iif(compile_expr exp 0, compile_stmt stmt o, Iblock([]))
+    | Sif(exp, stmt1, stmt2) -> Iif(compile_expr exp o, compile_stmt stmt1 o, compile_stmt stmt2 o)
+    | Sblock(blocks) -> List.map (fun x -> compile_stmt x o) blocks
+    | Sreturn(exp) -> Ireturn(compile_expr exp o)
+    | Sassign(lval, exp) -> Iassign(Ileft(get_addr_from_lvalue lval),compile_expr exp o)
+    | Sval(exp) -> Ival(compile_expr exp o)
+    | Sbreak -> Ibreak
+    | Scontinue -> Icontinue
 
 
 
