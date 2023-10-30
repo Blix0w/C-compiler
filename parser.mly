@@ -64,7 +64,7 @@ simple_stmt:
   | CONTINUE                        { Sbreak, $startpos }
   | BREAK                           { Scontinue, $startpos }
   | RETURN; e = expr                { Sreturn(e), $startpos }
-  | e1 = expr; EQ; e2 = expr        { Sassign(e1, e2), $startpos }
+  | e1 = left_value; EQ; e2 = expr  { Sassign(e1, e2), $startpos } (* j'ai remis une left_value pour e1 a la place de expr *)
   | e = expr                        { Sval(e), $startpos }
 ;
 

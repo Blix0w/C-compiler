@@ -7,7 +7,9 @@ exception VarUndef of string
 exception Error of string ;;
 exception RuntimeError of string * Lexing.position ;;
 
-let variables = Hashtbl.create 1 (* associe un nom à une adresse *)
+let nb_bin_rec = ref 0
+
+let variables = Hashtbl.create 1 (* associe un nom de variable/fonction à une adresse *)
 let mem = ref 0 (* adresse de la mémoire qu'on va donner et modifier à chaque fois *)
 let allocate_memory size = 
   mem := !mem + size; !mem
@@ -24,19 +26,35 @@ let ofset o =
   (* donne l'addresse et la taille d'une left-value dans la mémoire 
      ou l'ajoute si elle n'y est pas déjà *)
   let get_addr_from_lvalue lvalue = match lvalue with
-    |Var(s) -> try Hashtbl.find variables with |_ -> let addr, size = allocate_memory String.length s, String.length s in Hashtbl.add variables s (addr, size); (addr,size)
-    |Def(type, lvalue2) -> failwith "not implemented2"
+    |Var(s) -> try Hashtbl.find variables s with |_ -> failwith "variable non déclarée"
+    |Def(typ, (Val Var s)) -> (let addr, size = allocate_memory String.length s in Hashtbl.add variables s (addr, size); Ileft((addr,size)))
+    |_ -> failwith "not implemented"
 
-let rec compile_expr (e: expr) (o: int): instruction list= 
+let rec compile_expr_to_addr (e: expr) (o: int) = (* 
+    renvoie un type ivalue
+    cette fonction n'est appelée que par compile_expr *)
   match e with
-    | Const(Int c) -> Iunop(Iconst(int_of_string c))
-    | Val(Var s) -> Iunop(Ileft(try (Hashtbl.find variables s, 8 * String.length s)))
-    | Moins(exp) ->  Iunop(Ileft(compile_expr exp 0))
+    | Const(Int c) -> Iconst(int_of_string c)
+    | Val(Var s) -> Ileft(Hashtbl.find variables s, 8 * String.length s)
+    | Moins(exp) ->  Ileft(compile_expr exp 0)
     (* Ibinop : profondeur de 1 maximum, il faut tout stocker dans des var intermédiaires *)
-    | BinOp(binop, exp1, exp2) -> 
-    | Ecall(nom, exprs) -> let body = compile_iast exprs
-    | Not(exp) -> Iunop(Ileft(compile_expr exp o))
+    | BinOp(binop, exp1, exp2) -> let iv1 = compile_expr_to_addr exp1 o and iv2 = compile_expr_to_addr exp2 o in
+      (* renvoie l'adresse ou est stocké le résultat de la binop (mais en fait n'écrit rien dans la mémoire)*)
+      incr nb_bin_rec; let name = ("_binop"^(string_of_int !nb_bin_rec)) in let addr, size = allocate_memory String.length name in Hashtbl.add variables name (addr, size); Ileft((addr,size))
+
+    | Ecall(nom, exprs) -> let body = compile_iast exprs in failwith "not implemented"
+    | Not(exp) -> Ileft(compile_expr exp o)
   
+
+let compile_expr (e: expr) (o: int) = (* renvoie un type iexpr *)
+  match e with
+    | Const x | Val x | Moins x | Not x | Ecall x -> compile_expr_to_addr e o
+    (* Ibinop : profondeur de 1 maximum, il faut tout stocker dans des var intermédiaires *)
+    | BinOp(binop, exp1, exp2) -> let iv1 = compile_expr_to_addr exp1 o and iv2 = compile_expr_to_addr exp2 o in
+      Ibinop(binop, iv1, iv2)
+
+
+
     (* produit un iAST à partir d'un stmt_node*)
   and compile_stmt stmt o = match stmt with
     | Sif(exp, stmt) -> Iif(compile_expr exp 0, compile_stmt stmt o, Iblock([]))
