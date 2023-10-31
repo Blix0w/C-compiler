@@ -77,7 +77,7 @@ and compile_expr (e: expr) (o: int) = (* renvoie un type iexpr *)
 (* Il reste à gérer les déclarations et appels de fonctions *)
 
 let compile_fonction name args = match (name, args) with
-  |("main", _) -> 
+  |("main", _) -> failwith "not implemented 4"
 
 (*
 let compile_fonction name args = match (name, args) with
@@ -93,6 +93,6 @@ let compile_def f =
   [Label(f.name)]@(compile_stmt f.body)
 *)
 
-let compile_program prog file = 
-  let compiled_functions = List.map (fun x -> (x.name, compile_stmt x.body 0)) prog in
+let compile_program prog _file = 
+  let compiled_functions = List.map (fun x -> (x.name, compile_stmt x.body 0)) prog.defs in
   (compiled_functions, [])
