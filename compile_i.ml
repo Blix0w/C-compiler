@@ -16,11 +16,15 @@ let ofset o =
 
 let compile_pos lst_var p o = match p with
   | Ilocal(i) -> []
-  | Iglobal(s) -> []
+  | Iglobal(s) -> [][]
   | Ideref(e) -> []
-  
+
+let compile_left_value lst_var lv o = 
+  let p i = lv in 
+  []
+
 let compile_ivalue lst_var v o = match v with
-  | Ileft(lv) -> []
+  | Ileft(lv) -> 
   | Iconst(i) ->  [
                     Li(T 0, i);
                     Sw(T 0, ofset o)
@@ -44,7 +48,7 @@ let rec compile_ast lst_var ast = match ast with
   | Iblock(b) -> List.fold_left (fun acc a -> acc@(compile_ast lst_var a)) [] b
   | Iif(e, a1, a2) -> (incr index_if); 
       (compile_iexpr lst_var e 0) @ [
-      Lw(T 0, ofset pos);
+      Lw(T 0, ofset 0);
       Beq(T 0, ZERO ,"else_" ^ string_of_int !index_if)] @
       (compile_ast lst_var a1) @ [
       J("endif_" ^ string_of_int !index_if);
