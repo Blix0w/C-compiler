@@ -21,7 +21,7 @@ let compile_pos lst_var p o = match p with
 
 let compile_left_value lst_var lv o = 
   let p i = lv in 
-  []
+  [lv]
 
 let compile_ivalue lst_var v o = match v with
   | Ileft(lv) -> 
